@@ -2,15 +2,20 @@
   <el-row>
     <el-col>
       <el-card :body-style="{ padding: '0px' }">
-        <img
-          src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-          class="image"
-        />
+        <div class="header">
+          <div class="time">{{ currentDate }}</div>
+          <div class="id">{{ id }}</div>
+        </div>
+        <div class="content">
+          这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容
+          这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容
+          这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容
+        </div>
         <div style="padding: 14px">
-          <span>Yummy hamburger</span>
           <div class="bottom">
-            <time class="time">{{ currentDate }}</time>
-            <el-button text class="button">Operating</el-button>
+            <el-button text class="button">点赞</el-button>
+            <el-button text class="button">踩</el-button>
+            <el-button text class="button">评论</el-button>
           </div>
         </div>
       </el-card>
@@ -18,18 +23,27 @@
   </el-row>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import { ref } from "vue";
 
-const currentDate = ref(new Date());
+// const currentDate = ref(new Date());
+const currentDate = "2023.01.01";
+const id = "coco";
 </script>
 
-<style>
+<style lang="less" scoped>
+.header {
+  display: flex;
+  justify-content: space-around;
+}
 .time {
   font-size: 12px;
   color: #999;
 }
-
+.content {
+  margin: 10px;
+  text-align: left;
+}
 .bottom {
   margin-top: 13px;
   line-height: 12px;
@@ -41,10 +55,5 @@ const currentDate = ref(new Date());
 .button {
   padding: 0;
   min-height: auto;
-}
-
-.image {
-  width: 100%;
-  display: block;
 }
 </style>
