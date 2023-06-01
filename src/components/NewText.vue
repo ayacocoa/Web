@@ -1,17 +1,18 @@
 <template>
-  <div class="modal" v-if="isModal">
-    <el-button class="cancel" type="danger" circle>
-      <el-icon @click="Cancel"><CloseBold /></el-icon>
-    </el-button>
-    <p>{{ title }}</p>
-    <textarea class="card" name="newCard"></textarea>
-    <el-button type="success" round class="submit">提交</el-button>
-  </div>
+  <transition name="tran-modal">
+    <div class="modal" v-if="isModal">
+      <el-button class="cancel" type="danger" circle>
+        <el-icon @click="Cancel"><CloseBold /></el-icon>
+      </el-button>
+      <p>{{ title }}</p>
+      <textarea class="card" name="newCard"></textarea>
+      <el-button type="success" round class="submit">提交</el-button>
+    </div>
+  </transition>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { defineProps, defineEmits, toRefs } from "vue";
+import { ref, toRefs } from "vue";
 const textarea = ref("");
 const props = defineProps({
   title: {
@@ -26,10 +27,22 @@ const emit = defineEmits(["close"]);
 function Cancel() {
   emit("close");
 }
-console.log(props);
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+.tran-modal {
+  &-enter {
+    &-from {
+      transform: translateX(360px);
+    }
+    &-active {
+      transition: all 1s;
+    }
+    &-to {
+      transform: translateX(0px);
+    }
+  }
+}
 .modal {
   width: 360px;
   height: 100%;

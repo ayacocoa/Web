@@ -7,6 +7,7 @@
     <el-button class="add" type="success" circle @click="openModel">
       <el-icon><Plus /></el-icon>
     </el-button>
+    <BottomStatement />
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import TopBar from "../components/TopBar.vue";
 import Carousel from "../components/Carousel.vue";
 import TextWall from "../components/TextWall.vue";
 import NewText from "../components/NewText.vue";
+import BottomStatement from "../components/BottomStatement.vue";
 import { ref, watch } from "vue";
 let modal = ref(false);
 function openModel() {
