@@ -1,7 +1,11 @@
 <template>
   <el-row>
     <el-col>
-      <el-card :body-style="{ padding: '0px' }" class="card">
+      <el-card
+        :body-style="{ padding: '0px' }"
+        class="card"
+        @click="DetailCard"
+      >
         <div class="header">
           <div class="time">{{ currentDate }}</div>
           <div class="id">{{ id }}</div>
@@ -35,6 +39,10 @@ import { ref } from "vue";
 // const currentDate = ref(new Date());
 const currentDate = "2023.01.01";
 const id = "coco";
+const emit = defineEmits(["detail"]);
+function DetailCard() {
+  emit("detail");
+}
 </script>
 
 <style lang="less" scoped>

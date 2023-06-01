@@ -2,8 +2,8 @@
   <div>
     <TopBar />
     <Carousel />
-    <TextWall />
-    <NewText @close="closeModal" :isModal="modal" title="lalala" />
+    <TextWall @detail="openDetail" />
+    <SideText @close="closeModal" :isModal="modal" title="lalala" />
     <el-button class="add" type="success" circle @click="openModel">
       <el-icon><Plus /></el-icon>
     </el-button>
@@ -15,16 +15,21 @@
 import TopBar from "../components/TopBar.vue";
 import Carousel from "../components/Carousel.vue";
 import TextWall from "../components/TextWall.vue";
-import NewText from "../components/NewText.vue";
+import SideText from "../components/SideText.vue";
 import BottomStatement from "../components/BottomStatement.vue";
-import { ref, watch } from "vue";
-let modal = ref(false);
+import { provide, ref, watch } from "vue";
+let modal = ref(0);
 function openModel() {
-  modal.value = true;
+  modal.value = 1;
 }
 function closeModal() {
-  modal.value = false;
+  modal.value = 0;
 }
+function openDetail() {
+  modal.value = 2;
+  console.log("1");
+}
+provide("modal");
 </script>
 
 <style lang="less" scoped>

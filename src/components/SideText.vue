@@ -1,6 +1,16 @@
 <template>
   <transition name="tran-modal">
-    <div class="modal" v-if="isModal">
+    <div class="modal" v-if="isModal == 1">
+      <el-button class="cancel" type="danger" circle>
+        <el-icon @click="Cancel"><CloseBold /></el-icon>
+      </el-button>
+      <p>{{ title }}</p>
+      <textarea class="card" name="newCard"></textarea>
+      <el-button type="success" round class="submit">提交</el-button>
+    </div>
+  </transition>
+  <transition name="tran-modal">
+    <div class="modal" v-if="isModal == 2">
       <el-button class="cancel" type="danger" circle>
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
