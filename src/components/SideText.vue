@@ -1,42 +1,55 @@
 <template>
+  <!-- 新建 -->
   <transition name="tran-modal">
     <div class="modal" v-if="isModal == 1">
       <el-button class="cancel" type="danger" circle>
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
-      <p>{{ title }}</p>
+      <p>新建</p>
       <textarea class="card" name="newCard"></textarea>
       <el-button type="success" round class="submit">提交</el-button>
     </div>
   </transition>
+  <!-- 查看已存在 -->
   <transition name="tran-modal">
     <div class="modal" v-if="isModal == 2">
       <el-button class="cancel" type="danger" circle>
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
       <p>{{ title }}</p>
-      <textarea class="card" name="newCard"></textarea>
+      <textarea class="card" name="newCard" v-model="content"> </textarea>
       <el-button type="success" round class="submit">提交</el-button>
     </div>
   </transition>
 </template>
 
 <script setup>
-import { ref, toRefs } from "vue";
+import { ref, toRefs, inject, onMounted, getCurrentInstance } from "vue";
 const textarea = ref("");
 const props = defineProps({
-  title: {
-    default: "标题",
-  },
   isModal: {
     default: "false",
   },
 });
+const title = ref("");
+const content = ref("");
 let { isModal } = toRefs(props);
 const emit = defineEmits(["close"]);
 function Cancel() {
   emit("close");
 }
+const cxt = getCurrentInstance();
+const bus = cxt.appContext.config.globalProperties.$bus;
+onMounted(() => {
+  bus.on("title", (tit) => {
+    // debugger;
+    title.value = tit;
+  });
+  bus.on("content", (val) => {
+    // debugger;
+    content.value = val;
+  });
+});
 </script>
 
 <style lang="less" scoped>

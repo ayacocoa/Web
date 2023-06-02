@@ -1,19 +1,13 @@
 <template>
   <el-row>
     <el-col>
-      <el-card
-        :body-style="{ padding: '0px' }"
-        class="card"
-        @click="DetailCard"
-      >
+      <el-card :body-style="{ padding: '0px' }" class="card">
         <div class="header">
           <div class="time">{{ currentDate }}</div>
-          <div class="id">{{ id }}</div>
+          <div class="id">{{ title }}</div>
         </div>
-        <div class="content">
-          这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容
-          这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容
-          这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容
+        <div class="content" @click="DetailCard">
+          {{ content }}
         </div>
         <div style="padding: 14px">
           <div class="bottom">
@@ -35,13 +29,20 @@
 
 <script setup>
 import { ref } from "vue";
+import { getCurrentInstance } from "vue";
+const cxt = getCurrentInstance(); //相当于Vue2中的this
+const bus = cxt.appContext.config.globalProperties.$bus;
 
 // const currentDate = ref(new Date());
 const currentDate = "2023.01.01";
-const id = "coco";
+const title = "coco";
+const content =
+  "这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容";
 const emit = defineEmits(["detail"]);
 function DetailCard() {
-  emit("detail");
+  bus.emit("detail");
+  bus.emit("title", title);
+  bus.emit("content", content);
 }
 </script>
 

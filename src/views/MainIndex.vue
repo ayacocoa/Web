@@ -2,8 +2,8 @@
   <div>
     <TopBar />
     <Carousel />
-    <TextWall @detail="openDetail" />
-    <SideText @close="closeModal" :isModal="modal" title="lalala" />
+    <TextWall />
+    <SideText @close="closeModal" :isModal="modal" />
     <el-button class="add" type="success" circle @click="openModel">
       <el-icon><Plus /></el-icon>
     </el-button>
@@ -17,7 +17,16 @@ import Carousel from "../components/Carousel.vue";
 import TextWall from "../components/TextWall.vue";
 import SideText from "../components/SideText.vue";
 import BottomStatement from "../components/BottomStatement.vue";
-import { provide, ref, watch } from "vue";
+import {
+  provide,
+  ref,
+  watch,
+  getCurrentInstance,
+  onMounted,
+  onBeforeUnmount,
+} from "vue";
+const cxt = getCurrentInstance();
+const bus = cxt.appContext.config.globalProperties.$bus;
 let modal = ref(0);
 function openModel() {
   modal.value = 1;
@@ -25,11 +34,14 @@ function openModel() {
 function closeModal() {
   modal.value = 0;
 }
-function openDetail() {
-  modal.value = 2;
-  console.log("1");
-}
-provide("modal");
+onMounted(() => {
+  bus.on("detail", () => {
+    modal.value = 2;
+  });
+});
+onBeforeUnmount(() => {
+  bus.off("detail");
+});
 </script>
 
 <style lang="less" scoped>
