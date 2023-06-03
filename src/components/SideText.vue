@@ -15,7 +15,7 @@
       <textarea
         class="card"
         name="newCard"
-        v-model="Newdata.content"
+        v-model="Newdata.message"
       ></textarea>
       <input
         type="text"
@@ -35,7 +35,7 @@
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
       <p class="new">{{ Olddata.title }}</p>
-      <textarea class="card" name="newCard" v-model="Olddata.content">
+      <textarea class="card" name="newCard" v-model="Olddata.message">
       </textarea>
     </div>
   </transition>
@@ -50,8 +50,10 @@ import {
   getCurrentInstance,
   reactive,
 } from "vue";
-import { signInApi } from "../api/index";
+import { signInApi, insertWallApi } from "../api/index";
+import myData from "../utils/myData";
 const textarea = ref("");
+let nowtime = myData();
 const props = defineProps({
   isModal: {
     default: "false",
@@ -59,24 +61,36 @@ const props = defineProps({
 });
 const Olddata = reactive({
   title: "",
-  content: "",
+  message: "",
   name: "",
   userId: "",
-  moment: "",
+  message: "",
 });
 const Newdata = reactive({
-  title: "",
+  type: 0,
+  message: "",
   name: "",
-  content: "",
   userId: "",
-  moment: new Date(),
+  moment: nowtime,
+  title: "",
 });
 let { isModal } = toRefs(props);
 const emit = defineEmits(["close"]);
 function Cancel() {
   emit("close");
 }
+const sign = signInApi();
+
 function Onsubmit() {
+  if (Newdata.title !== "" && Newdata.name !== "" && Newdata.message !== "") {
+    sign.then((res) => {
+      // console.log(res);
+      Newdata.userId = res.id;
+    });
+    insertWallApi(Newdata);
+  } else {
+    alert("不能为空");
+  }
   console.log(Newdata);
 }
 
@@ -88,9 +102,9 @@ onMounted(() => {
     // debugger;
     Olddata.title = tit;
   });
-  bus.on("content", (val) => {
+  bus.on("message", (val) => {
     // debugger;
-    Olddata.content = val;
+    Olddata.message = val;
   });
 });
 </script>

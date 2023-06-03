@@ -1,7 +1,12 @@
 <template>
   <el-row>
     <el-col>
-      <el-card :body-style="{ padding: '0px' }" class="card">
+      <el-card
+        :body-style="{ padding: '0px' }"
+        class="card"
+        v-for="(item, index) in 12"
+        :key="index"
+      >
         <div class="header">
           <div class="time">{{ currentDate }}</div>
           <div class="id">{{ title }}</div>
@@ -51,6 +56,10 @@ function DetailCard() {
   border-radius: 20px;
   background: linear-gradient(to bottom, skyblue, white);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.08);
+  display: inline-block;
+  width: 30%;
+  margin: 10px;
+
   .header {
     display: flex;
     justify-content: space-around;

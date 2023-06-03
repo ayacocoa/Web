@@ -40,7 +40,7 @@ onMounted(() => {
     modal.value = 2;
   });
   signInApi().then((res) => {
-    console.log(res);
+    // console.log(res);
     let user = {
       id: res.ip,
     };

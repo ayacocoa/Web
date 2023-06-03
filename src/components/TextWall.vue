@@ -1,8 +1,6 @@
 <template>
   <div class="text-wall">
-    <div v-for="(item, index) in 4" :key="index">
-      <one-text-wall />
-    </div>
+    <text-box />
     <el-pagination
       background
       layout="prev, pager, next"
@@ -14,6 +12,7 @@
 
 <script setup>
 import OneTextWall from "./OneTextWall.vue";
+import TextBox from "./TextBox.vue";
 </script>
 
 <style scoped lang="less">
