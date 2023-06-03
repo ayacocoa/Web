@@ -6,16 +6,22 @@
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
       <p class="new">新建</p>
+      <input
+        type="text"
+        class="input"
+        placeholder="标题"
+        v-model="Newdata.title"
+      />
       <textarea
         class="card"
         name="newCard"
-        v-model="data.newcontent"
+        v-model="Newdata.content"
       ></textarea>
       <input
         type="text"
         class="input"
         placeholder="您的昵称"
-        v-model="data.name"
+        v-model="Newdata.name"
       />
       <el-button type="success" round class="submit" @click="Onsubmit"
         >提交
@@ -28,14 +34,22 @@
       <el-button class="cancel" type="danger" circle>
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
-      <p class="new">{{ title }}</p>
-      <textarea class="card" name="newCard" v-model="data.content"> </textarea>
+      <p class="new">{{ Olddata.title }}</p>
+      <textarea class="card" name="newCard" v-model="Olddata.content">
+      </textarea>
     </div>
   </transition>
 </template>
 
 <script setup>
-import { ref, toRefs, inject, onMounted, getCurrentInstance } from "vue";
+import {
+  ref,
+  toRefs,
+  inject,
+  onMounted,
+  getCurrentInstance,
+  reactive,
+} from "vue";
 import { signInApi } from "../api/index";
 const textarea = ref("");
 const props = defineProps({
@@ -43,21 +57,27 @@ const props = defineProps({
     default: "false",
   },
 });
-const data = {
+const Olddata = reactive({
   title: "",
   content: "",
   name: "",
-  newcontent: "",
-};
+  userId: "",
+  moment: "",
+});
+const Newdata = reactive({
+  title: "",
+  name: "",
+  content: "",
+  userId: "",
+  moment: new Date(),
+});
 let { isModal } = toRefs(props);
 const emit = defineEmits(["close"]);
 function Cancel() {
   emit("close");
 }
 function Onsubmit() {
-  signInApi().then((res) => {
-    console.log(res);
-  });
+  console.log(Newdata);
 }
 
 //全局总线
@@ -66,11 +86,11 @@ const bus = cxt.appContext.config.globalProperties.$bus;
 onMounted(() => {
   bus.on("title", (tit) => {
     // debugger;
-    title.value = tit;
+    Olddata.title = tit;
   });
   bus.on("content", (val) => {
     // debugger;
-    content.value = val;
+    Olddata.content = val;
   });
 });
 </script>

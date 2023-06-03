@@ -17,6 +17,7 @@ import Carousel from "../components/Carousel.vue";
 import TextWall from "../components/TextWall.vue";
 import SideText from "../components/SideText.vue";
 import BottomStatement from "../components/BottomStatement.vue";
+import { signInApi } from "../api/index";
 import {
   provide,
   ref,
@@ -37,6 +38,12 @@ function closeModal() {
 onMounted(() => {
   bus.on("detail", () => {
     modal.value = 2;
+  });
+  signInApi().then((res) => {
+    console.log(res);
+    let user = {
+      id: res.ip,
+    };
   });
 });
 onBeforeUnmount(() => {
