@@ -84,7 +84,7 @@ const sign = signInApi();
 function Onsubmit() {
   if (Newdata.title !== "" && Newdata.name !== "" && Newdata.message !== "") {
     sign.then((res) => {
-      // console.log(res);
+      console.log(res);
       Newdata.userId = res.id;
     });
     insertWallApi(Newdata);

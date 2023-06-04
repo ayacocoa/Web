@@ -14,6 +14,7 @@
 
 <style lang="less" scoped>
 .bottom-statement {
+  background: linear-gradient(to bottom, aqua, white);
   position: absolute;
   display: flex;
   justify-content: space-between;

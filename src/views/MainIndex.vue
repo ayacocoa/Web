@@ -39,12 +39,13 @@ onMounted(() => {
   bus.on("detail", () => {
     modal.value = 2;
   });
-  signInApi().then((res) => {
-    // console.log(res);
-    let user = {
-      id: res.ip,
-    };
-  });
+  //获取ip
+  // signInApi().then((res) => {
+  //   // console.log(res);
+  //   let user = {
+  //     id: res.ip,
+  //   };
+  // });
 });
 onBeforeUnmount(() => {
   bus.off("detail");

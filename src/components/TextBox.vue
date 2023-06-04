@@ -34,7 +34,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { getCurrentInstance } from "vue";
+import { getCurrentInstance, onBeforeMount } from "vue";
+import { findWall } from "../api/index";
 const cxt = getCurrentInstance(); //相当于Vue2中的this
 const bus = cxt.appContext.config.globalProperties.$bus;
 
@@ -43,12 +44,21 @@ const currentDate = "2023.01.01";
 const title = "coco";
 const content =
   "这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容";
+
 const emit = defineEmits(["detail"]);
 function DetailCard() {
   bus.emit("detail");
   bus.emit("title", title);
   bus.emit("content", content);
 }
+const data = {
+  id: 1,
+};
+const find = findWall(data);
+
+find.then((res) => {
+  console.log(res.data.message);
+});
 </script>
 
 <style lang="less" scoped>
@@ -56,10 +66,10 @@ function DetailCard() {
   border-radius: 20px;
   background: linear-gradient(to bottom, skyblue, white);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.08);
-  display: inline-block;
+  float: left;
   width: 30%;
-  margin: 10px;
-
+  height: 238px;
+  margin: 1%;
   .header {
     display: flex;
     justify-content: space-around;
@@ -78,6 +88,8 @@ function DetailCard() {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    bottom: 2px;
   }
 
   .button {

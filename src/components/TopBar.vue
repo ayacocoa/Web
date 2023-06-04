@@ -23,6 +23,9 @@ import { ref } from "vue";
 </script>
 
 <style>
+.el-menu-demo {
+  background: linear-gradient(to bottom, aqua, white);
+}
 .flex-grow {
   flex-grow: 0.35;
 }

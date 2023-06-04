@@ -11,7 +11,6 @@
 </template>
 
 <script setup>
-import OneTextWall from "./OneTextWall.vue";
 import TextBox from "./TextBox.vue";
 </script>
 
