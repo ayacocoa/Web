@@ -34,8 +34,8 @@
       <el-button class="cancel" type="danger" circle>
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
-      <p class="new">{{ Olddata.title }}</p>
-      <textarea class="card" name="newCard" v-model="Olddata.message">
+      <p class="new">{{ Olddata.data[id].title }}</p>
+      <textarea class="card" name="newCard" v-model="Olddata.data[id].message">
       </textarea>
     </div>
   </transition>
@@ -59,13 +59,8 @@ const props = defineProps({
     default: "false",
   },
 });
-const Olddata = reactive({
-  title: "",
-  message: "",
-  name: "",
-  userId: "",
-  message: "",
-});
+let id;
+let Olddata = reactive({});
 const Newdata = reactive({
   type: 0,
   message: "",
@@ -84,27 +79,29 @@ const sign = signInApi();
 function Onsubmit() {
   if (Newdata.title !== "" && Newdata.name !== "" && Newdata.message !== "") {
     sign.then((res) => {
-      console.log(res);
+      // console.log(res);
       Newdata.userId = res.id;
     });
     insertWallApi(Newdata);
   } else {
     alert("不能为空");
   }
-  console.log(Newdata);
+  // console.log(Newdata);
 }
 
 //全局总线
 const cxt = getCurrentInstance();
 const bus = cxt.appContext.config.globalProperties.$bus;
 onMounted(() => {
-  bus.on("title", (tit) => {
+  bus.on("detail", (val) => {
     // debugger;
-    Olddata.title = tit;
+    id = val;
+    // console.log(id);
   });
-  bus.on("message", (val) => {
+  bus.on("cards", (val) => {
     // debugger;
-    Olddata.message = val;
+    Olddata = val;
+    // console.log(Olddata);
   });
 });
 </script>
@@ -129,7 +126,7 @@ onMounted(() => {
   position: fixed;
   right: 0;
   top: 56px;
-  z-index: 100;
+  z-index: 9999;
   background-color: rgba(255, 255, 255, 0.08);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(10px);

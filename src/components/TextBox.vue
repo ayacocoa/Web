@@ -4,28 +4,25 @@
       <el-card
         :body-style="{ padding: '0px' }"
         class="card"
-        v-for="(item, index) in 12"
+        v-for="(item, index) in cards.data"
         :key="index"
       >
         <div class="header">
-          <div class="time">{{ currentDate }}</div>
-          <div class="id">{{ title }}</div>
+          <div class="time">{{ item.moment }}</div>
+          <div class="id">{{ item.title }}</div>
         </div>
-        <div class="content" @click="DetailCard">
-          {{ content }}
-        </div>
-        <div style="padding: 14px">
-          <div class="bottom">
-            <el-button text class="button">
-              <el-icon><Star /></el-icon>
-            </el-button>
-            <el-button text class="button">
-              <el-icon><WarnTriangleFilled /></el-icon>
-            </el-button>
-            <el-button text class="button">
-              <el-icon><Comment /></el-icon>
-            </el-button>
-          </div>
+        <div class="content" @click="DetailCard(index)">{{ item.message }}</div>
+
+        <div class="bottom">
+          <el-button text class="button">
+            <el-icon><Star style="color: blue" /></el-icon>
+          </el-button>
+          <el-button text class="button">
+            <el-icon><WarnTriangleFilled /></el-icon>
+          </el-button>
+          <el-button text class="button">
+            <el-icon><Comment /></el-icon>
+          </el-button>
         </div>
       </el-card>
     </el-col>
@@ -33,31 +30,34 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, reactive, ref, toRefs } from "vue";
 import { getCurrentInstance, onBeforeMount } from "vue";
 import { findWall } from "../api/index";
 const cxt = getCurrentInstance(); //相当于Vue2中的this
 const bus = cxt.appContext.config.globalProperties.$bus;
 
 // const currentDate = ref(new Date());
-const currentDate = "2023.01.01";
-const title = "coco";
-const content =
-  "这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容这是一段内容";
 
 const emit = defineEmits(["detail"]);
-function DetailCard() {
-  bus.emit("detail");
-  bus.emit("title", title);
-  bus.emit("content", content);
+function DetailCard(index) {
+  let id = index;
+  bus.emit("detail", id);
+  bus.emit("cards", cards);
 }
 const data = {
-  id: 1,
+  type: 0,
 };
-const find = findWall(data);
+let cards = reactive({
+  data: [],
+});
 
-find.then((res) => {
-  console.log(res.data.message);
+const find = findWall(data);
+onMounted(() => {
+  find.then(async (res) => {
+    // cards.data = cards.data.concat(res.data.message);
+    cards.data = [...res.data.message];
+    // console.log(cards);
+  });
 });
 </script>
 
@@ -70,6 +70,7 @@ find.then((res) => {
   width: 30%;
   height: 238px;
   margin: 1%;
+  position: relative;
   .header {
     display: flex;
     justify-content: space-around;
@@ -81,20 +82,25 @@ find.then((res) => {
   .content {
     margin: 10px;
     text-align: left;
+    height: 150px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
   .bottom {
     margin-top: 13px;
-    line-height: 12px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    position: relative;
-    bottom: 2px;
+    margin-left: 12px;
   }
 
   .button {
+    font-size: 20px;
     padding: 0;
     min-height: auto;
+    margin-left: 5px;
+    margin-right: 130px;
   }
 }
 </style>
