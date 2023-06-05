@@ -13,12 +13,6 @@ export const insertWallApi = (data) => {
 };
 
 //查询墙
-// export const findWall = (data) => {
-//   fetch.post("/findwall", data);
-//   console.log(data);
-// };
-
-//
 export function findWall(data) {
   return service.request({
     method: "post",
@@ -28,10 +22,20 @@ export function findWall(data) {
   });
 }
 
+//查询墙与页数
 export function findWallPage(data) {
   return service.request({
     method: "post",
     url: "/findwallpage",
+    data,
+  });
+}
+
+//新建反馈(喜欢/不喜欢/评论数)
+export function insertFeedback(data) {
+  return service.request({
+    method: "post",
+    url: "/insertfeedback",
     data,
   });
 }

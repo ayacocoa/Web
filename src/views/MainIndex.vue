@@ -37,7 +37,11 @@ function closeModal() {
 }
 onMounted(() => {
   bus.on("detail", () => {
-    modal.value = 2;
+    if (modal.value == 2) {
+      modal.value = 0;
+    } else if (modal.value == 0) {
+      modal.value = 2;
+    }
   });
   //获取ip
   // signInApi().then((res) => {

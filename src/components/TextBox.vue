@@ -5,16 +5,18 @@
         :body-style="{ padding: '0px' }"
         class="card"
         v-for="(item, index) in cards.data"
-        :key="index"
+        :key="item.id"
       >
         <div class="header">
           <div class="time">{{ item.moment }}</div>
           <div class="id">{{ item.title }}</div>
         </div>
-        <div class="content" @click="DetailCard(index)">{{ item.message }}</div>
+        <div class="content" @click="DetailCard(index)">
+          {{ item.message }}
+        </div>
 
         <div class="bottom">
-          <el-button text class="button">
+          <el-button text class="button" @click="ClickLike(item.id)">
             <el-icon><Star style="color: blue" /></el-icon>
             <p>{{ item.like[0].count }}</p>
           </el-button>
@@ -31,9 +33,10 @@
 </template>
 
 <script setup>
+import nowtime from "../utils/myData";
 import { onMounted, reactive, ref, toRefs } from "vue";
 import { getCurrentInstance, onBeforeMount, onBeforeUnmount } from "vue";
-import { findWall, findWallPage } from "../api/index";
+import { findWallPage, insertFeedback } from "../api/index";
 const cxt = getCurrentInstance(); //相当于Vue2中的this
 const bus = cxt.appContext.config.globalProperties.$bus;
 
@@ -41,9 +44,17 @@ const bus = cxt.appContext.config.globalProperties.$bus;
 
 // const emit = defineEmits(["detail"]);
 function DetailCard(index) {
-  let id = index;
-  bus.emit("detail", id);
+  bus.emit("detail", index);
   bus.emit("cards", cards);
+}
+function ClickLike(id) {
+  let data = {
+    wallId: id,
+    userId: "coco",
+    type: 0,
+    moment: nowtime(),
+  };
+  insertFeedback(data);
 }
 let data = reactive({ page: "1", pagesize: "9", type: 0, label: "-1" });
 
@@ -54,7 +65,7 @@ let cards = reactive({
 onMounted(() => {
   bus.on("currentPage", (val) => {
     data.page = val;
-    console.log(val);
+    // console.log(val);
     findWallPage(data).then(async (res) => {
       // cards.data = cards.data.concat(res.data.message);
       cards.data = [...res.data.message];
