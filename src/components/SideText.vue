@@ -37,6 +37,7 @@
       <p class="new">{{ Olddata.data[id].title }}</p>
       <textarea class="card" name="newCard" v-model="Olddata.data[id].message">
       </textarea>
+      <p class="author">--{{ Olddata.data[id].name }}</p>
     </div>
   </transition>
 </template>
@@ -56,7 +57,7 @@ const textarea = ref("");
 let nowtime = myData();
 const props = defineProps({
   isModal: {
-    default: "false",
+    default: "0",
   },
 });
 let id;
@@ -74,15 +75,19 @@ const emit = defineEmits(["close"]);
 function Cancel() {
   emit("close");
 }
-const sign = signInApi();
+// const sign = signInApi();
 
 function Onsubmit() {
-  if (Newdata.title !== "" && Newdata.name !== "" && Newdata.message !== "") {
+  if (Newdata.title !== "" && Newdata.message !== "") {
+    if (Newdata.name == "") {
+      Newdata.name = "匿名";
+    }
     sign.then((res) => {
       // console.log(res);
       Newdata.userId = res.id;
     });
     insertWallApi(Newdata);
+    alert("提交成功");
   } else {
     alert("不能为空");
   }
@@ -150,6 +155,10 @@ onMounted(() => {
     margin: 10px;
     padding: 12px;
     font-size: 22px;
+  }
+  .author {
+    position: absolute;
+    left: 10px;
   }
   .input {
     height: 30px;

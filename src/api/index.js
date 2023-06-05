@@ -27,3 +27,11 @@ export function findWall(data) {
     // params: params 左边的params是变量名（key）后台接收机的，右边的params是接收的参数
   });
 }
+
+export function findWallPage(data) {
+  return service.request({
+    method: "post",
+    url: "/findwallpage",
+    data,
+  });
+}

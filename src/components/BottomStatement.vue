@@ -14,13 +14,11 @@
 
 <style lang="less" scoped>
 .bottom-statement {
-  background: linear-gradient(to bottom, aqua, white);
-  position: absolute;
+  background: linear-gradient(to bottom, white, aqua);
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 200px;
-  width: 100%;
   background-color: white;
 }
 </style>

@@ -1,24 +1,13 @@
 <template>
   <div class="text-wall">
     <text-box />
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="40"
-      class="page"
-    />
+    <BottomPage />
   </div>
 </template>
 
 <script setup>
 import TextBox from "./TextBox.vue";
+import BottomPage from "./BottomPage.vue";
 </script>
 
-<style scoped lang="less">
-.text-wall {
-  .page {
-    display: flex;
-    justify-content: center;
-  }
-}
-</style>
+<style scoped lang="less"></style>

@@ -1,3 +1,7 @@
 body{
     background:linear-gradient(to bottom,skyblue,white)
 }
+*{
+    margin: 0;
+    padding: 0;
+}

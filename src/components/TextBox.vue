@@ -16,6 +16,7 @@
         <div class="bottom">
           <el-button text class="button">
             <el-icon><Star style="color: blue" /></el-icon>
+            <p>{{ item.like[0].count }}</p>
           </el-button>
           <el-button text class="button">
             <el-icon><WarnTriangleFilled /></el-icon>
@@ -31,33 +32,45 @@
 
 <script setup>
 import { onMounted, reactive, ref, toRefs } from "vue";
-import { getCurrentInstance, onBeforeMount } from "vue";
-import { findWall } from "../api/index";
+import { getCurrentInstance, onBeforeMount, onBeforeUnmount } from "vue";
+import { findWall, findWallPage } from "../api/index";
 const cxt = getCurrentInstance(); //相当于Vue2中的this
 const bus = cxt.appContext.config.globalProperties.$bus;
 
 // const currentDate = ref(new Date());
 
-const emit = defineEmits(["detail"]);
+// const emit = defineEmits(["detail"]);
 function DetailCard(index) {
   let id = index;
   bus.emit("detail", id);
   bus.emit("cards", cards);
 }
-const data = {
-  type: 0,
-};
+let data = reactive({ page: "1", pagesize: "9", type: 0, label: "-1" });
+
 let cards = reactive({
   data: [],
 });
 
-const find = findWall(data);
 onMounted(() => {
-  find.then(async (res) => {
+  bus.on("currentPage", (val) => {
+    data.page = val;
+    console.log(val);
+    findWallPage(data).then(async (res) => {
+      // cards.data = cards.data.concat(res.data.message);
+      cards.data = [...res.data.message];
+      // console.log(cards);
+    });
+  });
+  findWallPage(data).then(async (res) => {
     // cards.data = cards.data.concat(res.data.message);
     cards.data = [...res.data.message];
     // console.log(cards);
   });
+});
+
+onBeforeUnmount(() => {
+  bus.off("detail");
+  bus.off("currentPage");
 });
 </script>
 
@@ -87,20 +100,18 @@ onMounted(() => {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+    flex: 1;
   }
   .bottom {
-    margin-top: 13px;
     display: flex;
-    justify-content: space-between;
-    margin-left: 12px;
-  }
-
-  .button {
-    font-size: 20px;
-    padding: 0;
-    min-height: auto;
-    margin-left: 5px;
-    margin-right: 130px;
+    justify-content: space-around;
+    .button {
+      font-size: 20px;
+      padding: 0;
+    }
+    p {
+      margin-left: 2px;
+    }
   }
 }
 </style>
