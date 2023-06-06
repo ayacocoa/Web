@@ -1,11 +1,9 @@
 <template>
-  <div v-for="(item, index) in 4" :key="index">
-    <one-photo-wall />
-  </div>
+  <PhotoBox />
 </template>
 
 <script setup>
-import OnePhotoWall from "./OnePhotoWall.vue";
+import PhotoBox from "./PhotoBox.vue";
 </script>
 
-<style></style>
+<style lang="less" scoped></style>

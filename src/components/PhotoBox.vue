@@ -1,7 +1,12 @@
 <template>
   <el-row>
     <el-col>
-      <el-card :body-style="{ padding: '0px' }">
+      <el-card
+        :body-style="{ padding: '0px' }"
+        class="box"
+        v-for="(item, index) in 9"
+        :key="index"
+      >
         <img
           src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
           class="image"
@@ -24,7 +29,13 @@ import { ref } from "vue";
 const currentDate = ref(new Date());
 </script>
 
-<style>
+<style lang="less" scoped>
+.box {
+  width: 30%;
+  position: relative;
+  float: left;
+  margin: 1%;
+}
 .time {
   font-size: 12px;
   color: #999;

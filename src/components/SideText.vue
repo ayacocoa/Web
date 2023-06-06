@@ -37,7 +37,10 @@
       <p class="new">{{ Olddata.data[id].title }}</p>
       <textarea class="card" name="newCard" v-model="Olddata.data[id].message">
       </textarea>
-      <p class="author">--{{ Olddata.data[id].name }}</p>
+      <div>
+        <p class="author">--{{ Olddata.data[id].name }}</p>
+      </div>
+      <CommentPage />
     </div>
   </transition>
 </template>
@@ -52,6 +55,7 @@ import {
   reactive,
 } from "vue";
 import { signInApi, insertWallApi } from "../api/index";
+import CommentPage from "./CommentPage.vue";
 import myData from "../utils/myData";
 const textarea = ref("");
 let nowtime = myData();
@@ -158,7 +162,6 @@ onMounted(() => {
   }
   .author {
     position: absolute;
-    left: 10px;
   }
   .input {
     height: 30px;
