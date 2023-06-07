@@ -43,7 +43,7 @@
 
             <p>{{ islike.data[index].discount }}</p>
           </el-button>
-          <el-button text class="button">
+          <el-button text class="button" @click="DetailCard(index)">
             <el-icon><Comment /></el-icon>
           </el-button>
         </div>
@@ -107,6 +107,7 @@ function ClickDislike(id, index) {
     islike.data[index].discount++;
   }
 }
+
 function DetailCard(index) {
   bus.emit("detail", index);
   bus.emit("cards", cards);

@@ -12,6 +12,24 @@ export const insertWallApi = (data) => {
   fetch.post("/insertwall", data);
 };
 
+//新建反馈(喜欢/不喜欢/评论数)
+export function insertFeedback(data) {
+  return service.request({
+    method: "post",
+    url: "/insertfeedback",
+    data,
+  });
+}
+
+//新建评论
+export function insertComment(data) {
+  return service.request({
+    method: "post",
+    url: "/insertcomment",
+    data,
+  });
+}
+
 //查询墙
 export function findWall(data) {
   return service.request({
@@ -31,11 +49,11 @@ export function findWallPage(data) {
   });
 }
 
-//新建反馈(喜欢/不喜欢/评论数)
-export function insertFeedback(data) {
-  return service.request({
-    method: "post",
-    url: "/insertfeedback",
-    data,
-  });
-}
+// //查询评论
+// export function findCommentPage(data) {
+//   return service.request({
+//     method: 'post',
+//     url: '/findcommentpage',
+//     data
+//   })
+// }

@@ -37,9 +37,9 @@
       <p class="new">{{ Olddata.data[id].title }}</p>
       <textarea class="card" name="newCard" v-model="Olddata.data[id].message">
       </textarea>
-      <div>
-        <p class="author">--{{ Olddata.data[id].name }}</p>
-      </div>
+
+      <div class="author">--{{ Olddata.data[id].name }}</div>
+
       <CommentPage />
     </div>
   </transition>
