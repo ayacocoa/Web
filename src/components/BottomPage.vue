@@ -11,14 +11,13 @@
 
 <script setup>
 import { getCurrentInstance } from "vue";
+import emitter from "../mitt/event";
 let currentPage = 1;
-const cxt = getCurrentInstance(); //相当于Vue2中的this
-const bus = cxt.appContext.config.globalProperties.$bus;
-bus.emit("currentPage", currentPage);
+emitter.emit("currentPage", currentPage);
 function prevclick() {
   if (currentPage > 1) {
     currentPage--;
-    bus.emit("currentPage", currentPage);
+    emitter.emit("currentPage", currentPage);
   } else {
     alert("当前为第一页");
   }
@@ -26,7 +25,7 @@ function prevclick() {
 function nextclick() {
   if (currentPage < 2) {
     currentPage++;
-    bus.emit("currentPage", currentPage);
+    emitter.emit("currentPage", currentPage);
   } else {
     alert("当前为最后一页");
   }

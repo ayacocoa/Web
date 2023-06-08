@@ -26,8 +26,8 @@ import {
   onMounted,
   onBeforeUnmount,
 } from "vue";
-const cxt = getCurrentInstance();
-const bus = cxt.appContext.config.globalProperties.$bus;
+import emitter from "../mitt/event";
+// modal 判断侧栏的状态
 let modal = ref(0);
 function openModel() {
   modal.value = 1;
@@ -36,7 +36,7 @@ function closeModal() {
   modal.value = 0;
 }
 onMounted(() => {
-  bus.on("detail", () => {
+  emitter.on("detail", () => {
     if (modal.value == 2) {
       modal.value = 0;
     } else if (modal.value == 0) {
@@ -52,7 +52,7 @@ onMounted(() => {
   // });
 });
 onBeforeUnmount(() => {
-  bus.off("detail");
+  emitter.off("detail");
 });
 </script>
 

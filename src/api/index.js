@@ -49,11 +49,11 @@ export function findWallPage(data) {
   });
 }
 
-// //查询评论
-// export function findCommentPage(data) {
-//   return service.request({
-//     method: 'post',
-//     url: '/findcommentpage',
-//     data
-//   })
-// }
+//查询评论
+export function findCommentPage(data) {
+  return service.request({
+    method: "post",
+    url: "/findcommentpage",
+    data,
+  });
+}

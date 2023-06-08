@@ -1,40 +1,43 @@
 <template>
-  <div class="comment">
-    <div class="pic">
-      <el-avatar :size="50" :src="circleUrl" />
-    </div>
-    <div>
-      <textarea class="text"></textarea>
-    </div>
-  </div>
+  <OldComment :id="data.wallId" />
   <div class="addcomment">
-    <input type="text" />
-    <button type="submit">submit</button>
+    <input type="text" v-model="data.comment" />
+    <el-button type="success" round class="submit" @click="Onsubmit"
+      >提交
+    </el-button>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { insertComment } from "../../src/api/index";
+import OldComment from "./OldComment.vue";
+import myData from "../utils/myData";
+import emitter from "../mitt/event";
+import { ref, onBeforeMount, onMounted, reactive } from "vue";
+const props = defineProps({
+  Olddata: Object,
+  index: Number,
+});
+let dataArr = props.Olddata.data;
+let index = props.index;
+const data = reactive({
+  wallId: dataArr[index].id,
+  userId: "coco",
+  imgurl: dataArr[index].imgurl,
+  moment: myData(),
+  comment: "",
+  name: dataArr[index].name,
+});
+function Onsubmit() {
+  if (data.comment) {
+    insertComment(data);
+  } else {
+    alert("不能为空");
+  }
+}
 </script>
 
 <style lang="less" scoped>
-.comment {
-  background-color: rgba(120, 255, 255, 0.5);
-  margin-top: 40px;
-  display: flex;
-  height: 150px;
-  .pic {
-    margin-right: 20px;
-  }
-  .text {
-    border-radius: 20px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    resize: none;
-  }
-}
 .addcomment {
   display: flex;
   justify-content: space-around;
@@ -43,6 +46,7 @@ export default {};
   width: 300px;
   margin: 20px;
   input {
+    padding: 10px;
     border-radius: 20px;
   }
 }

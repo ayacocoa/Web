@@ -16,6 +16,4 @@ app.use(VueAxios, axios);
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
-const bus = mitt();
-app.config.globalProperties.$bus = bus;
 app.mount("#app");

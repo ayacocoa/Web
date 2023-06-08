@@ -57,17 +57,18 @@ import nowtime from "../utils/myData";
 import { onMounted, reactive, ref, toRefs } from "vue";
 import { getCurrentInstance, onBeforeMount, onBeforeUnmount } from "vue";
 import { findWallPage, insertFeedback } from "../api/index";
-const cxt = getCurrentInstance(); //相当于Vue2中的this
-const bus = cxt.appContext.config.globalProperties.$bus;
+import emitter from "../mitt/event";
 
 // const currentDate = ref(new Date());
 // const emit = defineEmits(["detail"]);
 
 let data = reactive({ page: "1", pagesize: "9", type: 0, label: "-1" });
 
+//单个数据wall
 let cards = reactive({
   data: [],
 });
+
 let islike = reactive({
   data: [
     { likecount: 0, islike: false, discount: 0, dislike: false },
@@ -109,12 +110,12 @@ function ClickDislike(id, index) {
 }
 
 function DetailCard(index) {
-  bus.emit("detail", index);
-  bus.emit("cards", cards);
+  emitter.emit("detail", index);
+  emitter.emit("cards", cards);
 }
 
 onMounted(() => {
-  bus.on("currentPage", (val) => {
+  emitter.on("currentPage", (val) => {
     data.page = val;
     // console.log(val);
     findWallPage(data).then(async (res) => {
@@ -137,11 +138,6 @@ onMounted(() => {
     }
     // console.log(islike.data);
   });
-});
-
-onBeforeUnmount(() => {
-  bus.off("detail");
-  bus.off("currentPage");
 });
 </script>
 

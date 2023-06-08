@@ -34,13 +34,18 @@
       <el-button class="cancel" type="danger" circle>
         <el-icon @click="Cancel"><CloseBold /></el-icon>
       </el-button>
-      <p class="new">{{ Olddata.data[id].title }}</p>
-      <textarea class="card" name="newCard" v-model="Olddata.data[id].message">
+      <p class="new">{{ Olddata.data[index].title }}</p>
+      <textarea
+        class="card"
+        name="newCard"
+        disabled
+        v-model="Olddata.data[index].message"
+      >
       </textarea>
 
-      <div class="author">--{{ Olddata.data[id].name }}</div>
+      <div class="author">--{{ Olddata.data[index].name }}</div>
 
-      <CommentPage />
+      <CommentPage :Olddata="Olddata" :index="index" />
     </div>
   </transition>
 </template>
@@ -57,6 +62,7 @@ import {
 import { signInApi, insertWallApi } from "../api/index";
 import CommentPage from "./CommentPage.vue";
 import myData from "../utils/myData";
+import emitter from "../mitt/event";
 const textarea = ref("");
 let nowtime = myData();
 const props = defineProps({
@@ -64,7 +70,7 @@ const props = defineProps({
     default: "0",
   },
 });
-let id;
+
 let Olddata = reactive({});
 const Newdata = reactive({
   type: 0,
@@ -86,10 +92,10 @@ function Onsubmit() {
     if (Newdata.name == "") {
       Newdata.name = "匿名";
     }
-    sign.then((res) => {
-      // console.log(res);
-      Newdata.userId = res.id;
-    });
+    // sign.then((res) => {
+    //   // console.log(res);
+    //   Newdata.userId = res.id;
+    // });
     insertWallApi(Newdata);
     alert("提交成功");
   } else {
@@ -99,16 +105,14 @@ function Onsubmit() {
 }
 
 //全局总线
-const cxt = getCurrentInstance();
-const bus = cxt.appContext.config.globalProperties.$bus;
+let index;
 onMounted(() => {
-  bus.on("detail", (val) => {
+  emitter.on("detail", (val) => {
     // debugger;
-    id = val;
+    index = val;
     // console.log(id);
   });
-  bus.on("cards", (val) => {
-    // debugger;
+  emitter.on("cards", (val) => {
     Olddata = val;
     // console.log(Olddata);
   });
