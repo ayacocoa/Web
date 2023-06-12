@@ -36,7 +36,6 @@ import { ElMessageBox } from "element-plus"; //这是用来在账号密码错误
 import store from "../store/index.js"; //这里引入vuex，暂时先忽略，后面会介绍
 import { loginApi, registApi } from "../api/index";
 
-const { proxy } = getCurrentInstance(); // 注意这里，下面login函数会用到
 const router = useRouter();
 // vue3中获取表单数据需要使用reactive
 const formData = reactive({
@@ -52,7 +51,11 @@ function login() {
       // store.commit("setAccessToken", res.data.access);
       // store.commit("setRefreshToken", res.data.refresh);
       // store.commit("updateLastRefreshTime"); // 更新最近一次刷新access token的时间，用于比较access token是否过期，这里要和jwt的内容联系起来看
-      console.log(res);
+      store.commit("setToken", res.data.token);
+      // localStorage.setItem("token", res.data.token);
+      console.log("token", res.data.token);
+      // console.log(res);
+
       router.push({
         // 跳转到主页面，
         name: "message",

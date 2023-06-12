@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+// import { useStore } from "vuex"; // 引入useStore 方法
 import store from "../store/index";
+// const store = store(); // 该方法用于返回store 实例
 
 const routes = [
   {
@@ -39,4 +41,14 @@ const router = createRouter({
 //   } else next();
 // });
 
+// router.beforeEach((to, from, next) => {
+//   // 设置路由守卫，在进页面之前，判断有token，才进入页面
+//   if (store.state.token) {
+//     store.commit("setToken", localStorage.getItem("token"));
+//     next("/");
+//   } else {
+//     // 没有token就调用后端接口，跳转地址
+//     next();
+//   }
+// });
 export default router;
