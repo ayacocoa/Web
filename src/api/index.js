@@ -57,3 +57,19 @@ export function findCommentPage(data) {
     data,
   });
 }
+//注册
+export function registApi(data) {
+  return service.request({
+    method: "post",
+    url: "/api/regist",
+    data,
+  });
+}
+//登录
+export function loginApi(data) {
+  return service.request({
+    method: "post",
+    url: "/api/login",
+    data,
+  });
+}
