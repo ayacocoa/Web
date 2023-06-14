@@ -120,7 +120,7 @@ onMounted(() => {
     // console.log(val);
     findWallPage(data).then(async (res) => {
       // cards.data = cards.data.concat(res.data.message);
-      cards.data = [...res.data.message];
+      cards.data = [...res.message];
       for (let i = 0; i < cards.data.length; i++) {
         islike.data[i].likecount = cards.data[i].like[0].count;
         islike.data[i].discount = cards.data[i].dislike[0].count;
@@ -130,7 +130,7 @@ onMounted(() => {
   });
   findWallPage(data).then(async (res) => {
     // cards.data = cards.data.concat(res.data.message);
-    cards.data = [...res.data.message];
+    cards.data = [...res.message];
     // console.log(cards.data);
     for (let i = 0; i < cards.data.length; i++) {
       islike.data[i].likecount = cards.data[i].like[0].count;

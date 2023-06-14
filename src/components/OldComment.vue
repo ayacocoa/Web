@@ -31,8 +31,8 @@ let target = {
 let data = ref("");
 onMounted(() => {
   findCommentPage(target).then((val) => {
-    if (val.data.message != "") {
-      data.value = val.data.message;
+    if (val.message != "") {
+      data.value = val.message;
     } else {
       data.value = [
         {

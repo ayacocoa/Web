@@ -45,17 +45,12 @@ const formData = reactive({
 // 使用异步的方式请求api
 function login() {
   loginApi(formData).then((res) => {
-    if (res.data.code == 200) {
+    // console.log(res);
+    if (res.code == 200) {
       // 如果返回码是200表明账号密码正确，校验通过
-      // 下面两行代码是获取后端返回的access token和refresh token并存储起来,方便后面使用
-      // store.commit("setAccessToken", res.data.access);
-      // store.commit("setRefreshToken", res.data.refresh);
-      // store.commit("updateLastRefreshTime"); // 更新最近一次刷新access token的时间，用于比较access token是否过期，这里要和jwt的内容联系起来看
-      store.commit("setToken", res.data.token);
-      // localStorage.setItem("token", res.data.token);
-      console.log("token", res.data.token);
-      // console.log(res);
-
+      store.commit("setToken", res.token);
+      store.commit("getUser", res.user);
+      console.log(store.state.user);
       router.push({
         // 跳转到主页面，
         name: "message",
@@ -71,7 +66,7 @@ function login() {
 }
 function regist() {
   registApi(formData).then((res) => {
-    alert(res.data.message);
+    alert(res.message);
   });
 }
 </script>

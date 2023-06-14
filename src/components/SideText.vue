@@ -114,7 +114,7 @@ onMounted(() => {
   });
   emitter.on("cards", (val) => {
     Olddata = val;
-    // console.log(Olddata);
+    console.log(Olddata);
   });
 });
 </script>

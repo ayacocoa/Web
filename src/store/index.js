@@ -1,10 +1,11 @@
 import { createStore } from "vuex";
+import { encrypt } from "../utils/encrypt";
 // 用Vuex.Store对象用来记录token
 const store = createStore({
   state: {
     // 存储token
     token: "",
-    userName: "", // 可选
+    user: [], // 用户信息
   },
   getters: {
     getToken(state) {
@@ -22,9 +23,11 @@ const store = createStore({
       state.token = "";
       localStorage.removeItem("token");
     },
-    // 可选
-    setUserInfo(state, userName) {
-      state.userName = userName;
+    // 拿到用户信息
+    getUser(state, user) {
+      state.user = user;
+      localStorage.setItem("user", encrypt(JSON.stringify(user)));
+      console.log(user);
     },
   },
 

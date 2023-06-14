@@ -73,3 +73,12 @@ export function loginApi(data) {
     data,
   });
 }
+
+//查询用户
+export function getUser(data) {
+  return service.request({
+    method: "post",
+    url: "/getUser",
+    data,
+  });
+}

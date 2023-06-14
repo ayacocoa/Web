@@ -18,15 +18,9 @@ import TextWall from "../components/TextWall.vue";
 import SideText from "../components/SideText.vue";
 import BottomStatement from "../components/BottomStatement.vue";
 import { signInApi } from "../api/index";
-import {
-  provide,
-  ref,
-  watch,
-  getCurrentInstance,
-  onMounted,
-  onBeforeUnmount,
-} from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import emitter from "../mitt/event";
+import { getUser } from "../api/index";
 // modal 判断侧栏的状态
 let modal = ref(0);
 function openModel() {

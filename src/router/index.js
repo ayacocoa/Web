@@ -31,24 +31,16 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   store.commit("getAccessToken");
-//   const token = store.state.access_token;
-//   if (!token && to.name !== "login") {
-//     next({ name: "login" });
-//   } else if (token && to.name === "login") {
-//     next({ name: "message" });
-//   } else next();
-// });
-
-// router.beforeEach((to, from, next) => {
-//   // 设置路由守卫，在进页面之前，判断有token，才进入页面
-//   if (store.state.token) {
-//     store.commit("setToken", localStorage.getItem("token"));
-//     next("/");
-//   } else {
-//     // 没有token就调用后端接口，跳转地址
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  // 设置路由守卫，在进页面之前，判断有token，才进入页面
+  if (localStorage.getItem("token")) {
+    next();
+  } else if (to.path != "/login") {
+    // 没有token就调用后端接口，跳转地址
+    console.log("未登录");
+    next("login");
+  } else {
+    next();
+  }
+});
 export default router;
