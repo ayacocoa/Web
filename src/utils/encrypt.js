@@ -12,7 +12,8 @@ export function decode(data) {
   try {
     let str = atob(data);
     let res = decodeURIComponent(str);
-    return JSON.parse(res);
+    let result = JSON.parse(res);
+    return JSON.parse(result);
   } catch (e) {
     throw Error("解码出错");
   }

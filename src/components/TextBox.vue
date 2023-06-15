@@ -4,6 +4,7 @@
       <el-card
         :body-style="{ padding: '0px' }"
         class="card"
+        :class="store.state.theme ? 'green' : 'blue'"
         v-for="(item, index) in cards.data"
         :key="item.id"
       >
@@ -58,6 +59,7 @@ import { onMounted, reactive, ref, toRefs } from "vue";
 import { getCurrentInstance, onBeforeMount, onBeforeUnmount } from "vue";
 import { findWallPage, insertFeedback } from "../api/index";
 import emitter from "../mitt/event";
+import store from "../store";
 
 // const currentDate = ref(new Date());
 // const emit = defineEmits(["detail"]);
@@ -151,7 +153,6 @@ onMounted(() => {
 }
 .card {
   border-radius: 20px;
-  background: linear-gradient(to bottom, skyblue, white);
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.08);
   float: left;
   width: 30%;

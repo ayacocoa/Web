@@ -1,29 +1,33 @@
 <template>
-  <el-carousel :interval="5000" arrow="always" height="200px">
-    <el-carousel-item v-for="item in 4" :key="item">
-      <h3 text="2xl" justify="center">{{ item }}</h3>
-    </el-carousel-item>
-  </el-carousel>
+  <div class="content" :class="store.state.theme ? 'green' : 'blue'">
+    <p class="note">诗与远方</p>
+    <p class="author">--coco</p>
+  </div>
 </template>
 
 <script setup>
+import store from "../store";
 // const item = ref("");
 </script>
 
-<style scoped>
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 300px;
-  margin: 0;
-  text-align: center;
-}
+<style scoped lang="less">
+.content {
+  height: 200px;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+  .note {
+    font-size: 60px;
+    font-family: 方正舒体;
+    display: flex;
+    justify-content: center;
+  }
+  .author {
+    height: 20px;
+    font-size: 20px;
+    display: flex;
+    justify-content: right;
+  }
 }
 </style>

@@ -1,7 +1,22 @@
 <template>
-  <el-menu class="el-menu-demo" mode="horizontal" :ellipsis="false">
+  <el-menu
+    class="el-menu-demo"
+    mode="horizontal"
+    :ellipsis="false"
+    :class="store.state.theme ? 'green' : 'blue'"
+  >
     <el-menu-item index="0">
       <img src="/coffee.png" alt="" style="width: 50px; height: 50px" />
+
+      <el-switch
+        v-model="value"
+        class="ml-2"
+        inline-prompt
+        style="--el-switch-on-color: #13ce66; --el-switch-off-color: skyblue"
+        active-text="护眼模式"
+        inactive-text="白天模式"
+        @click="changeTheme"
+      />
     </el-menu-item>
 
     <router-link to="message"
@@ -21,7 +36,11 @@
           <el-avatar size="small" :src="img" />
         </div>
       </template>
-      <el-menu-item index="3-1">个人信息</el-menu-item>
+      <el-menu-item index="3-1" style="height: 100px"
+        ><el-avatar size="large" :src="img" />
+        <div>.- - - - - - - - -.</div>
+        <div>{{ name }}</div></el-menu-item
+      >
       <el-menu-item index="3-2">修改信息</el-menu-item>
       <el-menu-item index="3-3">我发布的</el-menu-item>
     </el-sub-menu>
@@ -32,12 +51,17 @@
 import { ref } from "vue";
 import store from "../store";
 import { decode } from "../utils/encrypt";
+let value = ref(false);
 let img = decode(localStorage.getItem("user"))[0].imgurl;
+let name = decode(localStorage.getItem("user"))[0].nickname;
+function changeTheme() {
+  store.commit("changeTheme", store.state.theme);
+}
 </script>
 
 <style lang="less">
 .el-menu-demo {
-  background: linear-gradient(to bottom, aqua, white);
+  // background: linear-gradient(to bottom, aqua, white);
   display: flex;
   justify-content: space-between;
   .avatar {

@@ -3,9 +3,9 @@ import { encrypt } from "../utils/encrypt";
 // 用Vuex.Store对象用来记录token
 const store = createStore({
   state: {
-    // 存储token
-    token: "",
+    token: "", // 存储token
     user: [], // 用户信息
+    theme: false,
   },
   getters: {
     getToken(state) {
@@ -28,6 +28,9 @@ const store = createStore({
       state.user = user;
       localStorage.setItem("user", encrypt(JSON.stringify(user)));
       console.log(user);
+    },
+    changeTheme(state, theme) {
+      state.theme = !state.theme;
     },
   },
 

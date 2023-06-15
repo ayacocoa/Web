@@ -16,6 +16,7 @@
         class="card"
         name="newCard"
         v-model="Newdata.message"
+        :class="store.state.theme ? 'green' : 'blue'"
       ></textarea>
       <input
         type="text"
@@ -40,6 +41,7 @@
         name="newCard"
         disabled
         v-model="Olddata.data[index].message"
+        :class="store.state.theme ? 'green' : 'blue'"
       >
       </textarea>
 
@@ -63,6 +65,7 @@ import { signInApi, insertWallApi } from "../api/index";
 import CommentPage from "./CommentPage.vue";
 import myData from "../utils/myData";
 import emitter from "../mitt/event";
+import store from "../store";
 const textarea = ref("");
 let nowtime = myData();
 const props = defineProps({
@@ -158,7 +161,6 @@ onMounted(() => {
     height: 280px;
     resize: none;
     border-radius: 20px;
-    background: linear-gradient(to bottom, skyblue, white);
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.08);
     margin: 10px;
     padding: 12px;

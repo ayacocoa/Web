@@ -1,9 +1,17 @@
 <template>
   <div class="button">
-    <button class="left" @click="prevclick">
+    <button
+      class="left"
+      @click="prevclick"
+      :class="store.state.theme ? 'green' : 'blue'"
+    >
       <el-icon><ArrowLeft /></el-icon>
     </button>
-    <button class="right" @click="nextclick">
+    <button
+      class="right"
+      @click="nextclick"
+      :class="store.state.theme ? 'green' : 'blue'"
+    >
       <el-icon><ArrowRight /></el-icon>
     </button>
   </div>
@@ -12,6 +20,7 @@
 <script setup>
 import { getCurrentInstance } from "vue";
 import emitter from "../mitt/event";
+import store from "../store";
 let currentPage = 1;
 emitter.emit("currentPage", currentPage);
 function prevclick() {
@@ -41,13 +50,11 @@ function nextclick() {
     height: 50px;
     font-size: 50px;
     border-radius: 50px;
-    background: linear-gradient(to left, white, skyblue);
   }
   .right {
     height: 50px;
     font-size: 50px;
     border-radius: 50px;
-    background: linear-gradient(to right, white, skyblue);
   }
 }
 </style>

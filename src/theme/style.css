@@ -1,0 +1,9 @@
+/* 公共函数部分 */
+/*将所有的涉及到切换主题的样式全部放在此处*/
+/*不同主题传不同的变量*/
+.blue {
+  background: linear-gradient(to right bottom, skyblue, white);
+}
+.green {
+  background: linear-gradient(to right bottom, #69FF97, #00E4FF);
+}

@@ -1,0 +1,22 @@
+/* 公共函数部分 */
+/*将所有的涉及到切换主题的样式全部放在此处*/
+.theme(@active-color, @gradient-color-from, @gradient-color-to) {
+    background: linear-gradient(
+      to right bottom,
+      @gradient-color-from,
+      @gradient-color-to
+    );
+  }
+  /*不同主题传不同的变量*/
+  .blue {
+    @active-color: #1961eb;
+    @gradient-color-from: skyblue;
+    @gradient-color-to: white;
+    .theme(@active-color, @gradient-color-from, @gradient-color-to);
+  }
+  .green {
+    @active-color: green;
+    @gradient-color-from: #69FF97;
+    @gradient-color-to: #00E4FF;
+    .theme(@active-color, @gradient-color-from, @gradient-color-to);
+  }

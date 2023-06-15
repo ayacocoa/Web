@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="store.state.theme ? 'green' : 'blue'">
     <TopBar />
     <Carousel />
     <TextWall />
@@ -21,8 +21,10 @@ import { signInApi } from "../api/index";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import emitter from "../mitt/event";
 import { getUser } from "../api/index";
+import store from "../store/index";
 // modal 判断侧栏的状态
 let modal = ref(0);
+
 function openModel() {
   modal.value = 1;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom-statement">
+  <div class="bottom-statement" :class="store.state.theme ? 'green' : 'blue'">
     <div class="logo">
       <img src="coffee.png" alt="" />
     </div>
@@ -10,15 +10,15 @@
   </div>
 </template>
 
-<script></script>
+<script setup>
+import store from "../store";
+</script>
 
 <style lang="less" scoped>
 .bottom-statement {
-  background: linear-gradient(to bottom, white, aqua);
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 200px;
-  background-color: white;
 }
 </style>

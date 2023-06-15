@@ -1,5 +1,5 @@
 <template>
-  <div class="comment">
+  <div class="comment" :class="store.state.theme ? 'green' : 'blue'">
     <div v-for="(item, index) in data" :key="index" class="oneComment">
       <div class="row">
         <div class="pic">
@@ -17,6 +17,7 @@
 import { findCommentPage } from "../api/index";
 import { ref, onMounted } from "vue";
 import emitter from "../mitt/event";
+import store from "../store";
 const props = defineProps({
   id: Number,
 });
@@ -46,7 +47,6 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .comment {
-  background-color: rgba(120, 255, 255, 0.5);
   max-height: 150px;
   margin-top: 40px;
   display: flex;
