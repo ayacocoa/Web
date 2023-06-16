@@ -1,11 +1,16 @@
 import { createStore } from "vuex";
 import { encrypt } from "../utils/encrypt";
+import { searchFun } from "../api/index";
 // 用Vuex.Store对象用来记录token
 const store = createStore({
   state: {
     token: "", // 存储token
-    user: [], // 用户信息
+    user: {}, // 用户信息
     theme: false,
+    search: false,
+    content: {
+      data: "",
+    },
   },
   getters: {
     getToken(state) {
@@ -26,11 +31,21 @@ const store = createStore({
     // 拿到用户信息
     getUser(state, user) {
       state.user = user;
-      localStorage.setItem("user", encrypt(JSON.stringify(user)));
+      localStorage.setItem("user", encrypt(JSON.stringify(user[0])));
       console.log(user);
     },
-    changeTheme(state, theme) {
+    changeTheme(state) {
       state.theme = !state.theme;
+    },
+    submit(state) {
+      state.search = !state.search;
+      if (state.content.data) {
+        searchFun(state.content).then((data) => {
+          console.log(data);
+        });
+      } else {
+        alert("不能为空");
+      }
     },
   },
 

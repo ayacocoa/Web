@@ -7,7 +7,7 @@ const routes = [
   {
     path: "/",
     name: "index",
-    component: () => import("../views/MainIndex.vue"),
+    component: () => import("../views/Login.vue"),
   },
   {
     path: "/message",

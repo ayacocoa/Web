@@ -20,6 +20,22 @@ export function insertFeedback(data) {
     data,
   });
 }
+//查询反馈(喜欢/不喜欢/评论数)
+export function findFeedback(wallId, userId, type) {
+  return service.request({
+    method: "post",
+    url: "/findfeedback",
+    data: { wallId, userId, type },
+  });
+}
+//修改喜欢/不喜欢、评论数
+export function wallFeedback(wallId, type) {
+  return service.request({
+    method: "post",
+    url: "/wallfeedback",
+    data: { wallId, type },
+  });
+}
 
 //新建评论
 export function insertComment(data) {
@@ -79,6 +95,14 @@ export function getUser(data) {
   return service.request({
     method: "post",
     url: "/getUser",
+    data,
+  });
+}
+//搜索
+export function searchFun(data) {
+  return service.request({
+    method: "post",
+    url: "/search",
     data,
   });
 }

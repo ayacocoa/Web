@@ -13,36 +13,32 @@
           <div class="id">{{ item.title }}</div>
         </div>
         <div class="content" @click="DetailCard(index)">
-          {{ item.message }}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ item.message }}
         </div>
 
         <div class="bottom">
-          <el-button text class="button" @click="ClickLike(item.id, index)">
-            <svg
-              class="icon"
-              aria-hidden="true"
-              v-if="!islike.data[index].islike"
-            >
-              <use xlink:href="#icon-icon"></use>
-            </svg>
-            <svg class="icon" aria-hidden="true" v-else>
+          <el-button text class="button" @click="ClickLike(item.id)">
+            <!-- <svg class="icon" aria-hidden="true" v-if="islike">
+              <use xlink:href="#icon-icon-copy"></use>
+            </svg> -->
+            <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-icon-copy"></use>
             </svg>
-            <p>{{ islike.data[index].likecount }}</p>
+            <p>{{ item.tolike }}</p>
           </el-button>
           <el-button text class="button" @click="ClickDislike(item.id, index)">
-            <svg
+            <!-- <svg
               class="icon"
               aria-hidden="true"
               v-if="!islike.data[index].dislike"
-            >
-              <use xlink:href="#icon-buxihuan"></use>
-            </svg>
-            <svg class="icon" aria-hidden="true" v-else>
+            > -->
+            <!-- <use xlink:href="#icon-buxihuan"></use>
+            </svg> -->
+            <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-buxihuan-copy"></use>
             </svg>
 
-            <p>{{ islike.data[index].discount }}</p>
+            <p>{{ item.dislike }}</p>
           </el-button>
           <el-button text class="button" @click="DetailCard(index)">
             <el-icon><Comment /></el-icon>
@@ -56,89 +52,80 @@
 <script setup>
 import nowtime from "../utils/myData";
 import { onMounted, reactive, ref, toRefs } from "vue";
-import { getCurrentInstance, onBeforeMount, onBeforeUnmount } from "vue";
-import { findWallPage, insertFeedback } from "../api/index";
+import {
+  findFeedback,
+  findWallPage,
+  insertFeedback,
+  wallFeedback,
+} from "../api/index";
 import emitter from "../mitt/event";
 import store from "../store";
-
+import { decode } from "../utils/encrypt";
 // const currentDate = ref(new Date());
 // const emit = defineEmits(["detail"]);
 
 let data = reactive({ page: "1", pagesize: "9", type: 0, label: "-1" });
-
+let islike = ref(false);
 //单个数据wall
 let cards = reactive({
   data: [],
 });
 
-let islike = reactive({
-  data: [
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-    { likecount: 0, islike: false, discount: 0, dislike: false },
-  ],
-});
-function ClickLike(id, index) {
-  if (!islike.data[index].islike) {
-    let feedback = {
-      wallId: id,
-      userId: "coco",
-      type: 0,
-      moment: nowtime(),
-    };
-    insertFeedback(feedback);
-    islike.data[index].islike = !islike.data[index].islike;
-    islike.data[index].likecount++;
-  }
+function ClickLike(id) {
+  findFeedback(id, decode(localStorage.getItem("user")).username, 0).then(
+    (result) => {
+      if (!result.message.length) {
+        let feedback = {
+          wallId: id,
+          userId: decode(localStorage.getItem("user")).username,
+          type: 0,
+          moment: nowtime(),
+        };
+        insertFeedback(feedback);
+        wallFeedback(id, 0).then(() => {
+          findWallPage(data).then(async (res) => {
+            // cards.data = cards.data.concat(res.data.message);
+            cards.data = [...res.message];
+            console.log(cards.data);
+          });
+        });
+      } else {
+        alert("已点赞");
+      }
+    }
+  );
 }
-function ClickDislike(id, index) {
-  if (!islike.data[index].dislike) {
-    let feedback = {
-      wallId: id,
-      userId: "coco",
-      type: 1,
-      moment: nowtime(),
-    };
-    insertFeedback(feedback);
-    islike.data[index].dislike = !islike.data[index].dislike;
-    islike.data[index].discount++;
-  }
-}
+// function ClickDislike(id, index) {
+//   if (!) {
+//     let feedback = {
+//       wallId: id,
+//       userId: "coco",
+//       type: 1,
+//       moment: nowtime(),
+//     };
+//     insertFeedback(feedback);
+//   }
+// }
 
 function DetailCard(index) {
   emitter.emit("detail", index);
   emitter.emit("cards", cards);
 }
 
-onMounted(() => {
-  emitter.on("currentPage", (val) => {
-    data.page = val;
-    // console.log(val);
-    findWallPage(data).then(async (res) => {
-      // cards.data = cards.data.concat(res.data.message);
-      cards.data = [...res.message];
-      for (let i = 0; i < cards.data.length; i++) {
-        islike.data[i].likecount = cards.data[i].like[0].count;
-        islike.data[i].discount = cards.data[i].dislike[0].count;
-      }
-      // console.log(cards);
-    });
-  });
+emitter.on("currentPage", (val) => {
+  data.page = val;
+  // console.log(val);
   findWallPage(data).then(async (res) => {
     // cards.data = cards.data.concat(res.data.message);
     cards.data = [...res.message];
-    // console.log(cards.data);
-    for (let i = 0; i < cards.data.length; i++) {
-      islike.data[i].likecount = cards.data[i].like[0].count;
-      islike.data[i].discount = cards.data[i].dislike[0].count;
-    }
-    // console.log(islike.data);
+    // console.log(cards);
+  });
+});
+onMounted(() => {
+  findWallPage(data).then(async (res) => {
+    // cards.data = cards.data.concat(res.data.message);
+    cards.data = [...res.message];
+    console.log(cards.data);
   });
 });
 </script>

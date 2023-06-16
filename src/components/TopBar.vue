@@ -14,7 +14,7 @@
         inline-prompt
         style="--el-switch-on-color: #13ce66; --el-switch-off-color: skyblue"
         active-text="护眼模式"
-        inactive-text="白天模式"
+        inactive-text="普通模式"
         @click="changeTheme"
       />
     </el-menu-item>
@@ -30,38 +30,49 @@
         <el-button type="primary" plain round>照片墙</el-button>
       </el-menu-item></router-link
     >
-    <el-sub-menu index="3">
+    <el-menu-item index="3" style="margin-top: 10px">
+      <input
+        type="text"
+        style="height: 30px"
+        v-model="store.state.content.data"
+      />
+      <el-button type="primary" plain round @click="submit">提交</el-button>
+    </el-menu-item>
+    <el-sub-menu index="4">
       <template #title>
         <div class="avatar">
           <el-avatar size="small" :src="img" />
         </div>
       </template>
-      <el-menu-item index="3-1" style="height: 100px"
+      <el-menu-item index="4-1" style="height: 100px"
         ><el-avatar size="large" :src="img" />
         <div>.- - - - - - - - -.</div>
         <div>{{ name }}</div></el-menu-item
       >
-      <el-menu-item index="3-2">修改信息</el-menu-item>
-      <el-menu-item index="3-3">我发布的</el-menu-item>
+      <el-menu-item index="4-2">修改信息</el-menu-item>
+      <el-menu-item index="4-3">我发布的</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import store from "../store";
 import { decode } from "../utils/encrypt";
+
 let value = ref(false);
-let img = decode(localStorage.getItem("user"))[0].imgurl;
-let name = decode(localStorage.getItem("user"))[0].nickname;
+let img = decode(localStorage.getItem("user")).imgurl;
+let name = decode(localStorage.getItem("user")).nickname;
 function changeTheme() {
   store.commit("changeTheme", store.state.theme);
+}
+function submit() {
+  store.commit("submit");
 }
 </script>
 
 <style lang="less">
 .el-menu-demo {
-  // background: linear-gradient(to bottom, aqua, white);
   display: flex;
   justify-content: space-between;
   .avatar {
