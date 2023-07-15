@@ -10,13 +10,21 @@
         <img src="login2.jpg" alt="" />
       </div>
       <div class="content">
-        <h3 class="login-title">登录</h3>
+        <h3 class="login-title">注册</h3>
         <el-form-item label="用户名" prop="username" label-width="80px">
           <el-input
             type="input"
             auto-complete="off"
             placeholder="请输入用户名"
             v-model="formData.username"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="手机号" prop="phone" label-width="80px">
+          <el-input
+            type="input"
+            auto-complete="off"
+            placeholder="请输入手机号码"
+            v-model="formData.phone"
           ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password" label-width="80px">
@@ -30,7 +38,7 @@
         <el-form-item class="login-submit">
           <!--  这里通过@click绑定login函数，用于点击的时候触发登录功能 -->
           <el-button type="primary" class="login-submit" @click="login()"
-            >登录</el-button
+            >返回登陆</el-button
           >
           <el-button type="primary" class="login-submit" @click="regist()"
             >注册</el-button
@@ -53,32 +61,15 @@ const router = useRouter();
 const formData = reactive({
   username: "",
   password: "",
+  phone: "",
 });
 // 使用异步的方式请求api
 function login() {
-  loginApi(formData).then((res) => {
-    // console.log(res);
-    if (res.code == 200) {
-      // 如果返回码是200表明账号密码正确，校验通过
-      store.commit("setToken", res.token);
-      store.commit("getUser", res.user);
-      console.log(store.state.user);
-      router.push({
-        // 跳转到主页面，
-        name: "message",
-      });
-    } else {
-      // 如果账号密码错误的话就要进行提示，并且重新回到登录页面
-      alert("账号密码错误，请重试！");
-      router.push({
-        name: "login",
-      });
-    }
-  });
+  router.push("/login");
 }
 function regist() {
-  router.push({
-    name: "regist",
+  registApi(formData).then((res) => {
+    alert(res.message);
   });
 }
 </script>
@@ -94,7 +85,7 @@ function regist() {
 
   .login-container {
     background: #eaeaea;
-    height: 200px;
+    height: 250px;
     border-radius: 15px;
     width: 500px;
     padding: 35px 35px 15px 35px;

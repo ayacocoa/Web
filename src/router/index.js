@@ -24,6 +24,11 @@ const routes = [
     name: "login",
     component: () => import("../views/Login.vue"),
   },
+  {
+    path: "/regist",
+    name: "regist",
+    component: () => import("../views/Regist.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -36,9 +41,13 @@ router.beforeEach((to, from, next) => {
   if (localStorage.getItem("token")) {
     next();
   } else if (to.path != "/login") {
-    // 没有token就调用后端接口，跳转地址
-    console.log("未登录");
-    next("login");
+    if (to.path == "/regist") {
+      next();
+    } else {
+      // 没有token就调用后端接口，跳转地址
+      console.log("未登录");
+      next("login");
+    }
   } else {
     next();
   }
