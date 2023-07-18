@@ -32,6 +32,7 @@
           <el-button type="primary" class="login-submit" @click="login()"
             >登录</el-button
           >
+          <Vcode :show="isShow" @success="onSuccess" @close="onClose" />
           <el-button type="primary" class="login-submit" @click="regist()"
             >注册</el-button
           >
@@ -42,13 +43,30 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, reactive } from "vue";
+import { getCurrentInstance, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox } from "element-plus"; //这是用来在账号密码错误时弹窗提示的
 import store from "../store/index.js"; //这里引入vuex，暂时先忽略，后面会介绍
 import { loginApi, registApi } from "../api/index";
+import Vcode from "vue3-puzzle-vcode";
 
 const router = useRouter();
+//验证功能
+const isShow = ref(false);
+const onShow = () => {
+  isShow.value = true;
+};
+const onClose = () => {
+  isShow.value = false;
+};
+const onSuccess = () => {
+  onClose(); // 验证成功，需要手动关闭模态框
+  router.push({
+    // 跳转到主页面，
+    name: "message",
+  });
+};
+
 // vue3中获取表单数据需要使用reactive
 const formData = reactive({
   username: "",
@@ -63,10 +81,7 @@ function login() {
       store.commit("setToken", res.token);
       store.commit("getUser", res.user);
       console.log(store.state.user);
-      router.push({
-        // 跳转到主页面，
-        name: "message",
-      });
+      onShow();
     } else {
       // 如果账号密码错误的话就要进行提示，并且重新回到登录页面
       alert("账号密码错误，请重试！");
