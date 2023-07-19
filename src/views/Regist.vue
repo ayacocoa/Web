@@ -69,7 +69,8 @@ function login() {
 }
 function regist() {
   registApi(formData).then((res) => {
-    alert(res.message);
+    alert("注册成功");
+    router.push("/login");
   });
 }
 </script>

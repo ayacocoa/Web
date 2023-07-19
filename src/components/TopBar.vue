@@ -31,12 +31,16 @@
       </el-menu-item></router-link
     >
     <el-menu-item index="3" style="margin-top: 10px">
-      <input
-        type="text"
-        style="height: 30px"
-        v-model="store.state.content.data"
-      />
-      <el-button type="primary" plain round @click="submit">提交</el-button>
+      <div class="inputSearch">
+        <input
+          type="text"
+          style="height: 30px"
+          v-model="store.state.content.data"
+        />
+        <el-button type="primary" plain round @click="submit" class="button">
+          <el-icon><Search /></el-icon>
+        </el-button>
+      </div>
     </el-menu-item>
     <el-sub-menu index="4">
       <template #title>
@@ -46,7 +50,7 @@
       </template>
       <el-menu-item index="4-1" style="height: 100px"
         ><el-avatar size="large" :src="img" />
-        <div>.- - - - - - - - -.</div>
+        <div>- - - - - - - - -</div>
         <div>{{ name }}</div></el-menu-item
       >
       <el-menu-item index="4-2">修改信息</el-menu-item>
@@ -72,6 +76,21 @@ function submit() {
 </script>
 
 <style lang="less">
+.inputSearch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  input {
+    border-radius: 40px;
+    padding: 0 20px;
+    border: 0;
+  }
+  .button {
+    position: relative;
+    width: 40px;
+    right: 40px;
+  }
+}
 .el-menu-demo {
   display: flex;
   justify-content: space-between;
