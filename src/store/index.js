@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { encrypt } from "../utils/encrypt";
 import { searchFun } from "../api/index";
+import router from "../router";
 // 用Vuex.Store对象用来记录token
 const store = createStore({
   state: {
@@ -9,7 +10,10 @@ const store = createStore({
     theme: false,
     search: false,
     content: {
-      data: "",
+      data: "", // 搜索栏文本
+    },
+    searchresult: {
+      results: [],
     },
   },
   getters: {
@@ -41,8 +45,9 @@ const store = createStore({
       state.search = !state.search;
       if (state.content.data) {
         searchFun(state.content).then((data) => {
-          console.log(data);
+          state.searchresult.results = data;
         });
+        router.push("/search?word=" + state.content.data);
       } else {
         alert("不能为空");
       }

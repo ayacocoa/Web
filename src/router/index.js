@@ -29,6 +29,12 @@ const routes = [
     name: "regist",
     component: () => import("../views/Regist.vue"),
   },
+  {
+    path: "/search",
+    name: "search",
+    component: () => import("../views/SearchIndex.vue"),
+    props: (route) => ({ query: route.query.word }),
+  },
 ];
 
 const router = createRouter({

@@ -60,10 +60,9 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, inject } from "vue";
 import store from "../store";
 import { decode } from "../utils/encrypt";
-
 let value = ref(false);
 let img = decode(localStorage.getItem("user")).imgurl;
 let name = decode(localStorage.getItem("user")).nickname;
