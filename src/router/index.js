@@ -33,7 +33,7 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("../views/SearchIndex.vue"),
-    props: (route) => ({ query: route.query.word }),
+    props: (route) => ({ query: route.query.keyword }),
   },
 ];
 

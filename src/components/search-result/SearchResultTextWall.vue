@@ -51,7 +51,8 @@
 
 <script setup>
 import nowtime from "../../utils/myData";
-import { inject, onMounted, reactive, ref, toRefs } from "vue";
+import { inject, onMounted, reactive, ref, toRefs, watch } from "vue";
+import { searchFun } from "../../api/index";
 import {
   findFeedback,
   findWallPage,
@@ -63,16 +64,18 @@ import store from "../../store";
 import { decode } from "../../utils/encrypt";
 // const currentDate = ref(new Date());
 // const emit = defineEmits(["detail"]);
-let reload = inject("reload"); //todo
+
 let islike = ref(false);
 //单个数据wall
 let cards = reactive({
   data: [],
 });
-if (store.state.searchresult.results) {
-  console.log(store.state.searchresult.results);
-  cards.data = store.state.searchresult.results;
+if (store.state.content.data) {
+  searchFun(store.state.content).then((data) => {
+    cards.data = data;
+  });
 }
+
 function ClickLike(id) {
   findFeedback(id, decode(localStorage.getItem("user")).username, 0).then(
     (result) => {

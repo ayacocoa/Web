@@ -66,11 +66,13 @@ import { decode } from "../utils/encrypt";
 let value = ref(false);
 let img = decode(localStorage.getItem("user")).imgurl;
 let name = decode(localStorage.getItem("user")).nickname;
+const reload = inject("reload");
 function changeTheme() {
   store.commit("changeTheme", store.state.theme);
 }
 function submit() {
   store.commit("submit");
+  reload();
 }
 </script>
 

@@ -44,12 +44,17 @@ const store = createStore({
     submit(state) {
       state.search = !state.search;
       if (state.content.data) {
-        searchFun(state.content).then((data) => {
-          state.searchresult.results = data;
-        });
-        router.push("/search?word=" + state.content.data);
+        router.push("/search?keyword=" + state.content.data);
+
+        // const href = router.resolve({
+        //   path: "/search",
+        //   query: {
+        //     keyword: state.content.data,
+        //   },
+        // });
+        // window.open(href.href, " _blank");
       } else {
-        alert("不能为空");
+        router.push("/message");
       }
     },
   },
