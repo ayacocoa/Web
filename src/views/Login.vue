@@ -7,7 +7,7 @@
       ref="formRef"
     >
       <div class="pic">
-        <img src="login2.jpg" alt="" />
+        <!-- <img src="login2.jpg" alt="" /> -->
       </div>
       <div class="content">
         <h3 class="login-title">登录</h3>

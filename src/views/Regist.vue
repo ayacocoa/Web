@@ -7,7 +7,7 @@
       ref="formRef"
     >
       <div class="pic">
-        <img src="login2.jpg" alt="" />
+        <!-- <img src="login2.jpg" alt="" /> -->
       </div>
       <div class="content">
         <h3 class="login-title">注册</h3>
@@ -82,7 +82,7 @@ function regist() {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(login.jpg) no-repeat;
+  // background: url(login.jpg) no-repeat;
 
   .login-container {
     background: #eaeaea;
