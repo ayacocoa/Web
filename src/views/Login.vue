@@ -105,7 +105,7 @@ function regist() {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url(login.jpg) no-repeat;
+  background: url(public\login2.jpg) no-repeat;
 
   .login-container {
     background: #eaeaea;
