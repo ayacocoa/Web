@@ -4,6 +4,7 @@
     mode="horizontal"
     :ellipsis="false"
     :class="store.state.theme ? 'green' : 'blue'"
+    background-color="rgba(255,255,255,0)"
   >
     <el-menu-item index="0">
       <img src="/coffee.png" alt="" style="width: 50px; height: 50px" />
@@ -54,18 +55,20 @@
         <div>{{ name }}</div></el-menu-item
       >
       <el-menu-item index="4-2">修改信息</el-menu-item>
-      <el-menu-item index="4-3">我发布的</el-menu-item>
+      <el-menu-item index="4-3" @click="collect">我的收藏</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
 
 <script setup>
 import { ref, reactive, inject } from "vue";
+import { useRouter } from "vue-router";
 import store from "../store";
 import { decode } from "../utils/encrypt";
 let value = ref(false);
 let img = decode(localStorage.getItem("user")).imgurl;
 let name = decode(localStorage.getItem("user")).nickname;
+const router = useRouter();
 const reload = inject("reload");
 function changeTheme() {
   store.commit("changeTheme", store.state.theme);
@@ -73,6 +76,12 @@ function changeTheme() {
 function submit() {
   store.commit("submit");
   reload();
+}
+function collect() {
+  const url = router.resolve({
+    path: "/mycollect",
+  });
+  window.open(url.href);
 }
 </script>
 

@@ -35,6 +35,11 @@ const routes = [
     component: () => import("../views/SearchIndex.vue"),
     props: (route) => ({ query: route.query.keyword }),
   },
+  {
+    path: "/mycollect",
+    name: "mycollect",
+    component: () => import("../views/MyCollect.vue"),
+  },
 ];
 
 const router = createRouter({

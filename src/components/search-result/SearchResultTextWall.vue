@@ -40,6 +40,10 @@
 
             <p>{{ item.dislike }}</p>
           </el-button>
+          <el-button text class="button" @click="ClickCollect(item.id, index)">
+            <el-icon><Star /></el-icon>
+            <p>{{ item.collect }}</p>
+          </el-button>
           <el-button text class="button" @click="DetailCard(index)">
             <el-icon><Comment /></el-icon>
           </el-button>
@@ -52,6 +56,7 @@
 <script setup>
 import nowtime from "../../utils/myData";
 import { inject, onMounted, reactive, ref, toRefs, watch } from "vue";
+import { decode } from "../../utils/encrpts";
 import { searchFun } from "../../api/index";
 import {
   findFeedback,
@@ -70,19 +75,19 @@ let islike = ref(false);
 let cards = reactive({
   data: [],
 });
+
 if (store.state.content.data) {
   searchFun(store.state.content).then((data) => {
     cards.data = data;
   });
 }
-
 function ClickLike(id) {
-  findFeedback(id, decode(localStorage.getItem("user")).username, 0).then(
+  findFeedback(id, decode(localStorage.getItem("user")).id, 0).then(
     (result) => {
       if (!result.message.length) {
         let feedback = {
           wallId: id,
-          userId: decode(localStorage.getItem("user")).username,
+          userId: decode(localStorage.getItem("user")).id,
           type: 0,
           moment: nowtime(),
         };
@@ -100,17 +105,54 @@ function ClickLike(id) {
     }
   );
 }
-// function ClickDislike(id, index) {
-//   if (!) {
-//     let feedback = {
-//       wallId: id,
-//       userId: "coco",
-//       type: 1,
-//       moment: nowtime(),
-//     };
-//     insertFeedback(feedback);
-//   }
-// }
+function ClickDislike(id) {
+  findFeedback(id, decode(localStorage.getItem("user")).id, 1).then(
+    (result) => {
+      if (!result.message.length) {
+        let feedback = {
+          wallId: id,
+          userId: decode(localStorage.getItem("user")).id,
+          type: 1,
+          moment: nowtime(),
+        };
+        insertFeedback(feedback);
+        wallFeedback(id, 1).then(() => {
+          findWallPage(data).then(async (res) => {
+            // cards.data = cards.data.concat(res.data.message);
+            cards.data = [...res.message];
+            console.log(cards.data);
+          });
+        });
+      } else {
+        alert("已点踩");
+      }
+    }
+  );
+}
+function ClickCollect(id) {
+  findFeedback(id, decode(localStorage.getItem("user")).id, 3).then(
+    (result) => {
+      if (!result.message.length) {
+        let feedback = {
+          wallId: id,
+          userId: decode(localStorage.getItem("user")).id,
+          type: 3,
+          moment: nowtime(),
+        };
+        insertFeedback(feedback);
+        wallFeedback(id, 3).then(() => {
+          findWallPage(data).then(async (res) => {
+            // cards.data = cards.data.concat(res.data.message);
+            cards.data = [...res.message];
+            console.log(cards.data);
+          });
+        });
+      } else {
+        alert("已收藏");
+      }
+    }
+  );
+}
 </script>
 
 <style lang="less" scoped>

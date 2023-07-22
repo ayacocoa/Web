@@ -20,6 +20,14 @@ export function insertFeedback(data) {
     data,
   });
 }
+//删除反馈(喜欢/不喜欢/评论数)
+export function deleteFeedback(wallId, userId, type) {
+  return service.request({
+    method: "post",
+    url: "/deletefeedback",
+    data: { wallId, userId, type },
+  });
+}
 //查询反馈(喜欢/不喜欢/评论数)
 export function findFeedback(wallId, userId, type) {
   return service.request({
@@ -28,11 +36,27 @@ export function findFeedback(wallId, userId, type) {
     data: { wallId, userId, type },
   });
 }
-//修改喜欢/不喜欢、评论数
+//查询收藏
+export function findCollect(userId, type) {
+  return service.request({
+    method: "post",
+    url: "/findcollect",
+    data: { userId, type },
+  });
+}
+//增加喜欢/不喜欢、评论数
 export function wallFeedback(wallId, type) {
   return service.request({
     method: "post",
     url: "/wallfeedback",
+    data: { wallId, type },
+  });
+}
+//减少喜欢/不喜欢、评论数
+export function subWallFeedback(wallId, type) {
+  return service.request({
+    method: "post",
+    url: "/subwallfeedback",
     data: { wallId, type },
   });
 }
