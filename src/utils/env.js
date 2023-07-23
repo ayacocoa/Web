@@ -18,4 +18,5 @@ if (process.env.NODE_ENV === "development") {
   baseUrl = "https://wall-backend-44781-8-1317899860.sh.run.tcloudbase.com:3000";
   baseImgPath = "http://";
 }
+console.log(baseURL)
 export { baseImgPath, baseUrl, routerMode };
