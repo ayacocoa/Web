@@ -7,7 +7,11 @@
     background-color="rgba(255,255,255,0)"
   >
     <el-menu-item index="0">
-      <!-- <img src="public\coffee.png" alt="" style="width: 50px; height: 50px" /> -->
+      <img
+        src="../assets/coffee.png"
+        alt=""
+        style="width: 50px; height: 50px"
+      />
 
       <el-switch
         v-model="value"
