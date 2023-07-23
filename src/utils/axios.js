@@ -6,7 +6,7 @@ import router from "../router/index";
 
 const service = axios.create({
   baseURL: baseUrl,
-  timeout: 2000, // 设置了在2000毫秒内请求数据 如果没有请求成功就执行错误函数
+  timeout: 5000, // 设置了在2000毫秒内请求数据 如果没有请求成功就执行错误函数
 });
 
 // 请求拦截：每一次发请求都要做的逻辑
