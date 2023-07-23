@@ -15,8 +15,7 @@ if (process.env.NODE_ENV === "development") {
   baseUrl = "http://localhost:3000";
   baseImgPath = "http://localhost:3000";
 } else {
-  baseUrl =
-    "https://wall-backend-44781-8-1317899860.sh.run.tcloudbase.com:3000";
+  baseUrl = "https://wall-backend-44781-8-1317899860.sh.run.tcloudbase.com";
   baseImgPath = "";
 }
 console.log(baseUrl);
