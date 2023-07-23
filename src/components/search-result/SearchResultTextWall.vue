@@ -56,7 +56,7 @@
 <script setup>
 import nowtime from "../../utils/myData";
 import { inject, onMounted, reactive, ref, toRefs, watch } from "vue";
-import { decode } from "../../utils/encrpts";
+import { Dodecode } from "../../utils/encrpts";
 import { searchFun } from "../../api/index";
 import {
   findFeedback,
@@ -66,7 +66,7 @@ import {
 } from "../../api/index";
 import emitter from "../../mitt/event";
 import store from "../../store";
-import { decode } from "../../utils/encrypt";
+import { Dodecode } from "../../utils/encrypt";
 // const currentDate = ref(new Date());
 // const emit = defineEmits(["detail"]);
 
@@ -82,12 +82,12 @@ if (store.state.content.data) {
   });
 }
 function ClickLike(id) {
-  findFeedback(id, decode(localStorage.getItem("user")).id, 0).then(
+  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 0).then(
     (result) => {
       if (!result.message.length) {
         let feedback = {
           wallId: id,
-          userId: decode(localStorage.getItem("user")).id,
+          userId: Dodecode(localStorage.getItem("user")).id,
           type: 0,
           moment: nowtime(),
         };
@@ -106,12 +106,12 @@ function ClickLike(id) {
   );
 }
 function ClickDislike(id) {
-  findFeedback(id, decode(localStorage.getItem("user")).id, 1).then(
+  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 1).then(
     (result) => {
       if (!result.message.length) {
         let feedback = {
           wallId: id,
-          userId: decode(localStorage.getItem("user")).id,
+          userId: Dodecode(localStorage.getItem("user")).id,
           type: 1,
           moment: nowtime(),
         };
@@ -130,12 +130,12 @@ function ClickDislike(id) {
   );
 }
 function ClickCollect(id) {
-  findFeedback(id, decode(localStorage.getItem("user")).id, 3).then(
+  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 3).then(
     (result) => {
       if (!result.message.length) {
         let feedback = {
           wallId: id,
-          userId: decode(localStorage.getItem("user")).id,
+          userId: Dodecode(localStorage.getItem("user")).id,
           type: 3,
           moment: nowtime(),
         };
