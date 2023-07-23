@@ -42,7 +42,9 @@ const routes = [
   },
 ];
 
-const router = createRouter({
+let router;
+
+router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
