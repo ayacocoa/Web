@@ -8,7 +8,7 @@ export function encrypt(data) {
   let result = btoa(set);
   return result;
 }
-export function Dodecode(data) {
+export function decode(data) {
   try {
     let str = atob(data);
     let res = decodeURIComponent(str);

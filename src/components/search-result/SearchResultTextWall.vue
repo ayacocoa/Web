@@ -56,7 +56,7 @@
 <script setup>
 import nowtime from "../../utils/myData";
 import { inject, onMounted, reactive, ref, toRefs, watch } from "vue";
-import { Dodecode } from "../../utils/encrpts";
+import { decode } from "../../utils/encrypt";
 import { searchFun } from "../../api/index";
 import {
   findFeedback,
@@ -81,12 +81,12 @@ if (store.state.content.data) {
   });
 }
 function ClickLike(id) {
-  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 0).then(
+  findFeedback(id, decode(localStorage.getItem("user")).id, 0).then(
     (result) => {
       if (!result.message.length) {
         let feedback = {
           wallId: id,
-          userId: Dodecode(localStorage.getItem("user")).id,
+          userId: decode(localStorage.getItem("user")).id,
           type: 0,
           moment: nowtime(),
         };
@@ -105,12 +105,12 @@ function ClickLike(id) {
   );
 }
 function ClickDislike(id) {
-  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 1).then(
+  findFeedback(id, decode(localStorage.getItem("user")).id, 1).then(
     (result) => {
       if (!result.message.length) {
         let feedback = {
           wallId: id,
-          userId: Dodecode(localStorage.getItem("user")).id,
+          userId: decode(localStorage.getItem("user")).id,
           type: 1,
           moment: nowtime(),
         };
@@ -129,12 +129,12 @@ function ClickDislike(id) {
   );
 }
 function ClickCollect(id) {
-  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 3).then(
+  findFeedback(id, decode(localStorage.getItem("user")).id, 3).then(
     (result) => {
       if (!result.message.length) {
         let feedback = {
           wallId: id,
-          userId: Dodecode(localStorage.getItem("user")).id,
+          userId: decode(localStorage.getItem("user")).id,
           type: 3,
           moment: nowtime(),
         };

@@ -64,10 +64,10 @@
 import { ref, reactive, inject } from "vue";
 import { useRouter } from "vue-router";
 import store from "../store";
-import { Dodecode } from "../utils/encrypt";
+import { decode } from "../utils/encrypt";
 let value = ref(false);
-let img = Dodecode(localStorage.getItem("user")).imgurl;
-let name = Dodecode(localStorage.getItem("user")).nickname;
+let img = decode(localStorage.getItem("user")).imgurl;
+let name = decode(localStorage.getItem("user")).nickname;
 const router = useRouter();
 const reload = inject("reload");
 function changeTheme() {

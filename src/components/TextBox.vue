@@ -59,7 +59,7 @@ import {
 } from "../api/index";
 import emitter from "../mitt/event";
 import store from "../store";
-import { Dodecode } from "../utils/encrypt";
+import { decode } from "../utils/encrypt";
 // const currentDate = ref(new Date());
 // const emit = defineEmits(["detail"]);
 
@@ -73,7 +73,7 @@ let cards = reactive({
 function ClickLike(id) {
   let feedback = {
     wallId: id,
-    userId: Dodecode(localStorage.getItem("user")).id,
+    userId: decode(localStorage.getItem("user")).id,
     type: 0,
     moment: nowtime(),
   };
@@ -104,11 +104,11 @@ function ClickLike(id) {
   );
 }
 function ClickDislike(id) {
-  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 1).then(
+  findFeedback(id, decode(localStorage.getItem("user")).id, 1).then(
     (result) => {
       let feedback = {
         wallId: id,
-        userId: Dodecode(localStorage.getItem("user")).id,
+        userId: decode(localStorage.getItem("user")).id,
         type: 1,
         moment: nowtime(),
       };
@@ -137,11 +137,11 @@ function ClickDislike(id) {
   );
 }
 function ClickCollect(id) {
-  findFeedback(id, Dodecode(localStorage.getItem("user")).id, 3).then(
+  findFeedback(id, decode(localStorage.getItem("user")).id, 3).then(
     (result) => {
       let feedback = {
         wallId: id,
-        userId: Dodecode(localStorage.getItem("user")).id,
+        userId: decode(localStorage.getItem("user")).id,
         type: 3,
         moment: nowtime(),
       };
