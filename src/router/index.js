@@ -12,7 +12,7 @@ const routes = [
   {
     path: "/message",
     name: "message",
-    component: () => import("../views/MainIndex.vue"),
+    component: () => import("@/views/MainIndex.vue"),
   },
   {
     path: "/photo",
